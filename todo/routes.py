@@ -4,6 +4,8 @@ from todo.forms import sign_up, login
 from todo.models import User, Tasks
 from datetime import datetime, timedelta
 from todo import bcrypt
+from flask_mail import Message
+from todo import mail
 
 from itsdangerous import URLSafeTimedSerializer
 
@@ -254,7 +256,7 @@ def changeEmail():
         if new_email:
             user.email = new_email
             db.session.commit()
-            flash("Email updated successfully.")
+            flash("Email updated successfully.",'success')
             return redirect("/settings")
         
     return render_template("changeEmail.html", current_email=user.email)
@@ -317,22 +319,37 @@ def generate_reset_token(email):
 
 
 
-@app.route("/forgot_password" , methods = ["POST" ,"GET"])
+
+@app.route("/forgot_password", methods=["POST", "GET"])
 def forgot_password():
     if request.method == "POST":
         current_email = request.form.get('email')
         user = User.query.filter_by(email=current_email).first()
         if user:
-            print(user.email)
             token = generate_reset_token(user.email)
-            reset_url = url_for('reset_password', token = token, _external=True) # which makes the token str into links(URL)
-            print(f"Reset URL (simulated email): {reset_url}") # This has to be Mailed
-            return redirect('forgot_password')
-            
+            reset_url = url_for('reset_password', token=token, _external=True)
+
+            msg = Message("Password Reset Request",
+                          sender=app.config['MAIL_USERNAME'],
+                          recipients=[user.email])
+            msg.body = f'''Hi {user.user_name},
+
+To reset your password, click the following link:
+{reset_url}
+
+If you did not request a password reset, please ignore this email.
+'''
+            mail.send(msg)
+
+            flash("Password reset link sent! Please check your email.", "success")
+            return redirect(url_for('forgot_password'))
         else:
-            print("email not found..!")
-            return redirect("forget_password")
-    return render_template("forget_password.html")
+            flash("Email not found. Please try again.", "danger")
+            return redirect(url_for('forgot_password'))
+
+    return render_template("forgot_password.html")
+
+
 
 
 
@@ -346,11 +363,11 @@ def verify_token(token, max_age=60):
         return None
         
     
-@app.route('/reset_password/<token>' , methods = ["POST" ,"GET"])
+@app.route('/reset_password/<token>', methods=["POST", "GET"])
 def reset_password(token):
     email = verify_token(token)
     if not email:
-        print("Invalid or expired token.", "danger")
+        flash("Invalid or expired token.", "danger")
         return redirect(url_for('forgot_password'))
 
     if request.method == "POST":
@@ -362,10 +379,14 @@ def reset_password(token):
             hashed_password = bcrypt.generate_password_hash(new_password).decode('utf-8')
             user.password = hashed_password
             db.session.commit()
-            print("Password reset successful. Please login.")
+
+            flash("Password reset successful. Please log in.", "success")
             return redirect(url_for('login_page'))
-    
+        else:
+            flash("Passwords do not match. Try again.", "danger")
+
     return render_template('reset_password.html')
+
 
 
 
