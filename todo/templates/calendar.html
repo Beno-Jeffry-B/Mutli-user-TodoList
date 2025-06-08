@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Calendar{% endblock %}
+
+{% block content %}
+<div class="mt-5">
+    <div id='calendar' style="max-width: 900px; margin: 0 auto;" data-events='{{ events | tojson | safe }}'></div>
+</div>
+
+<!-- FullCalendar CSS -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet" />
+
+<!-- FullCalendar JS -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const calendarEl = document.getElementById('calendar');
+
+        // 🟡 Get events from data-attribute
+        const eventsData = JSON.parse(calendarEl.dataset.events);
+
+        const calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            height: 550,
+            events: eventsData
+        });
+
+        calendar.render();
+    });
+</script>
+{% endblock %}

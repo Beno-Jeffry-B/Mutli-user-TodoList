@@ -1,0 +1,37 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+Create List
+{% endblock %}
+
+
+
+{% block content %}
+
+
+{% with msgs = get_flashed_messages(with_categories=true) %}
+{% if msgs %}
+{% for category, msg in msgs %}
+<div class="d-flex justify-content-center">
+    <div class="alert alert-{{category}} alert-dismissible fade show text-center w-50" role="alert">
+        {{ msg }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+
+
+
+
+<form method="POST">
+    <label for="new_email">New Email:</label>
+    <input type="email" name="new_email" required>
+    <button type="submit">Update Email</button>
+</form>
+
+
+{%endblock%}

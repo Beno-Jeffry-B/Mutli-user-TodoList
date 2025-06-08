@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Create List
+{% endblock %}
+
+{% block content %}
+{% with msgs = get_flashed_messages(with_categories=true) %}
+{% if msgs %}
+{% for category, msg in msgs %}
+<div class="d-flex justify-content-center">
+    <div class="alert alert-{{category}} alert-dismissible fade show text-center w-50" role="alert">
+        {{ msg }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+
+
+
+<div class="task-container" style="display: flex; justify-content: center; margin: 0 auto; max-width: 700px;">
+    <form method="POST" style="display: flex; width: 100%; gap: 10px; align-items: center;">
+        <input type="text" placeholder="Enter the Task to be Done" class="form-control" name="input_task"
+            style="flex: 5; text-align: center;" required>
+        <button type="submit" name="submit" class="btn btn-primary" style="flex: 1;">Submit</button>
+
+        <!-- Filter dropdown -->
+        <select name="filter" id="filter" class="form-select" style="flex: 2; max-width: 180px;"
+            onchange="window.location.href='?filter=' + this.value;">
+            <option value="" {% if not current_filter %}selected{% endif %}>All Tasks</option>
+            <option value="due_today" {% if current_filter=='due_today' %}selected{% endif %}>Due Today</option>
+            <option value="due_week" {% if current_filter=='due_week' %}selected{% endif %}>Due This Week</option>
+            <option value="completed" {% if current_filter=='completed' %}selected{% endif %}>Completed</option>
+            <option value="pending" {% if current_filter=='pending' %}selected{% endif %}>Pending</option>
+        </select>
+    </form>
+</div>
+
+
+<table class="table table-bordered mt-4 text-center align-middle">
+    <thead class="table-dark">
+        <tr>
+            <th>Task</th>
+            <th>Priority</th>
+            <th>Status</th>
+            <th>Due Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if tasks %}
+        {% for task in tasks %}
+        <tr>
+            <td>{{ task.tasks }}</td>
+            <td class="
+             {% if task.priority == 'High' %} text-danger fw-bold
+             {% elif task.priority == 'Medium' %} text-warning fw-bold
+             {% elif task.priority == 'Low' %} text-success fw-bold
+             {% endif %}
+">{{ task.priority }}
+
+            </td>
+            <td>
+                <div class="dropdown">
+                    <button class="btn btn-sm dropdown-toggle 
+                    {% if task.status == 'not_started' %}btn-secondary
+                    {% elif task.status == 'in_progress' %}btn-warning
+                    {% else %}btn-success{% endif %}" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {% if task.status == 'not_started' %}
+                        Not Started
+                        {% elif task.status == 'in_progress' %}
+                        In Progress
+                        {% else %}
+                        Completed
+                        {% endif %}
+                    </button>
+                    <ul class="dropdown-menu">
+                        {% for status, label in [('not_started', 'Not Started'), ('in_progress', 'In Progress'),
+                        ('completed', 'Completed')] %}
+                        {% if status != task.status %}
+                        <li>
+                            <form method="POST" style="margin: 0;">
+                                <input type="hidden" name="task_id" value="{{ task.task_id }}">
+                                <input type="hidden" name="new_status" value="{{ status }}">
+                                <button type="submit" name="status_update_btn" class="dropdown-item">
+                                    {{ label }}
+                                </button>
+                            </form>
+                        </li>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </td>
+            <td>
+                {% if task.due_date %}
+                {{ task.due_date.strftime('%Y-%m-%d') }}
+                {% else %}
+                <span class="text-muted">Not Set</span>
+                {% endif %}
+            </td>
+            <td>
+                <!-- Edit Button (collapse toggle) -->
+                <button class="btn btn-sm btn-outline-primary me-1" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#editForm{{ task.task_id }}" aria-expanded="false"
+                    aria-controls="editForm{{ task.task_id }}">
+                    Edit
+                </button>
+
+                <!-- Delete Button -->
+                <form method="POST" style="display:inline;">
+                    <input type="hidden" name="task_id" value="{{ task.task_id }}">
+                    <button type="submit" name="delete_task" class="btn btn-sm btn-outline-danger"
+                        onclick="return confirm('Are you sure?')">
+                        Delete
+                    </button>
+                </form>
+
+                <!-- Edit Form (collapsible section) -->
+                <div class="collapse mt-2" id="editForm{{ task.task_id }}">
+                    <form method="POST" class="mt-2 text-start">
+                        <input type="hidden" name="task_id" value="{{ task.task_id }}">
+                        <input type="text" class="form-control mb-1" name="updated_task" value="{{ task.tasks }}"
+                            required>
+                        <select name="updated_priority" class="form-select mb-1">
+                            <option value="Low" {% if task.priority=='Low' %}selected{% endif %}>Low</option>
+                            <option value="Medium" {% if task.priority=='Medium' %}selected{% endif %}>Medium</option>
+                            <option value="High" {% if task.priority=='High' %}selected{% endif %}>High</option>
+                        </select>
+                        <input type="date" class="form-control mb-2" name="updated_due_date"
+                            value="{{ task.due_date.strftime('%Y-%m-%d') if task.due_date }}">
+                        <button type="submit" name="edit_task" class="btn btn-success btn-sm w-100">Save</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="5" class="text-center">No tasks added yet.</td>
+        </tr>
+        {% endif %}
+    </tbody>
+</table>
+{% endblock %}

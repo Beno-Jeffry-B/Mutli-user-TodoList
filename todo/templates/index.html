@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Landling Page</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        crossorigin="anonymous" />
+
+    <style>
+        .start-btn {
+            background: hsl(0, 100%, 65%);
+            border: none;
+            color: white;
+            margin: 0 auto;
+            padding: 0.75rem 2.5rem;
+            font-size: 1.2rem;
+            border-radius: 0.4rem;
+            cursor: pointer;
+            /* Infinite pulse animation with scale */
+            animation: pulse-scale 1s infinite ease-in-out;
+            transition: transform 0.3s ease;
+        }
+
+
+        .start-btn:hover {
+            color: white;
+            background-position: right;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+
+
+        @keyframes pulse-scale {
+
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+
+
+        nav.navbar {
+            margin-bottom: 5rem;
+            position: relative;
+
+        }
+
+        nav {
+            background: linear-gradient(to right, #5f2c82, #49a09d);
+            /* purple-teal gradient */
+            border: none;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg py-3" style="font-size: 1.8rem;">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+
+            <!-- Brand aligned left -->
+            <a class="navbar-brand text-white" style="font-size: 2.4rem; font-family: cursive;"
+                href=" #">TodoListApp</a>
+
+            <!-- Right side nav links and profile dropdown -->
+            <div class="d-flex align-items-center" style="font-family: cursive;">
+                <ul class=" navbar-nav d-flex flex-row me-4" style="font-size: 1.7rem;">
+                    <li class="nav-item me-3">
+                        <a class="nav-link text-white px-4" href="{{url_for('landing_page')}}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white px-4" href="{{url_for('about_page')}}">Help/About</a>
+                    </li>
+                    <li>
+                        <a class="nav-link text-white px-4" href="{{url_for('signup_page')}}">Sign up</a>
+                    </li>
+                </ul>
+
+
+            </div>
+
+        </div>
+    </nav>
+
+    {% with msgs = get_flashed_messages(with_categories=true) %}
+    {% if msgs %}
+    {% for category, msg in msgs %}
+    <div class="d-flex justify-content-center">
+        <div class="alert alert-{{category}} alert-dismissible fade show text-center w-50" role="alert">
+            {{ msg }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+
+
+    <div class="main-container" style="margin-bottom:110px; margin-top: 120px;">
+        <div class="quote" , style="text-align: center; font-size: 3rem; font-family: cursive;">
+            <p>Ready to make your day productive?</p>
+        </div>
+
+        <div style="display: flex; justify-content: center; margin-top: 4rem;">
+            <a class="btn btn-lg px-5 start-btn" href="{{url_for('signup_page')}}" style="text-decoration: none;">
+                Explore
+            </a>
+        </div>
+    </div>
+
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+</body>
+
+
+
+
+
+</html>
+
+<footer class="footer mt-5 py-5 text-center" style=" color: #555;">
+    <div>
+        <p>&copy; 2025 Multi-User Todo List. All rights reserved.</p>
+        <p>
+            Made with ❤️ by <strong>Beno Jeffry</strong>
+        </p>
+    </div>
+</footer>

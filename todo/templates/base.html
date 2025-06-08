@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}{% endblock %}</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        crossorigin="anonymous" />
+
+    <style>
+        nav.navbar {
+            margin-bottom: 5rem;
+            position: relative;
+
+        }
+
+        nav {
+            background: linear-gradient(to right, #5f2c82, #49a09d);
+            /* purple-teal gradient */
+            border: none;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+        }
+
+        .main-container {
+            display: flex;
+
+        }
+
+        .leftside {
+            margin: 0px 100px;
+            flex: 6;
+        }
+
+        .rightside {
+            flex: 6;
+        }
+
+        nav li :hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg py-3" style="font-size: 1.8rem;">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+
+            <!-- Brand aligned left -->
+            <a class="navbar-brand text-white" style="font-size: 2.4rem; font-family: cursive;"
+                href=" #">TodoListApp</a>
+
+            <!-- Right side nav links and profile dropdown -->
+            <div class="d-flex align-items-center" style="font-family: cursive;">
+                <ul class=" navbar-nav d-flex flex-row me-4" style="font-size: 1.7rem;">
+                    <li class="nav-item me-3">
+                        <a class="nav-link text-white px-4" href="{{url_for('home_page')}}">Home</a>
+                    </li>
+                    <li class="nav-item me-3">
+                        <a class="nav-link text-white px-4" href="{{url_for('createlist')}}">Tasks</a>
+                    </li>
+
+                    <li class="nav-item me-3">
+                        <a class="nav-link text-white px-4" href="{{url_for('stats')}}">Stats</a>
+                    </li>
+
+                    <li class="nav-item me-3">
+                        <a class="nav-link text-white px-4" href="{{url_for('calendar')}}">Calendar View</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-white px-4" href="{{url_for('help_page')}}">Help/About</a>
+                    </li>
+                </ul>
+
+                <!-- Profile dropdown -->
+                <div class="dropdown">
+                    <a class="dropdown-toggle d-flex align-items-center hidden-arrow text-white px-4" href="#"
+                        id="navbarDropdownMenuAvatar" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" height="50"
+                            alt="Avatar" loading="lazy" />
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
+                        <li><a class="dropdown-item" href="#">My profile</a></li>
+                        <li><a class="dropdown-item" href="{{url_for('settings')}}">Settings</a></li>
+                        <li><a class="dropdown-item" href="{{url_for('login_page')}}">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </nav>
+    {% block content %}
+    <div class="main-container">
+        <div class="leftside">
+            {% block Lcontent %}
+            {% endblock %}
+        </div>
+
+        <div class="rightside">
+            {% block Rcontent %}
+            {% endblock %}
+        </div>
+
+    </div>
+
+    {% endblock %}
+
+
+</body>
+
+
+
+
+
+<!-- Bootstrap JS Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    crossorigin="anonymous"></script>
+
+</html>

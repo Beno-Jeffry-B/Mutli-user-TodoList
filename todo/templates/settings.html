@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block title %}Calendar{% endblock %}
+
+{% block content %}
+
+
+
+<style>
+    h2 {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 28px;
+        color: #333;
+    }
+
+    .details {
+        max-width: 400px;
+        margin: 30px auto 20px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 12px;
+        background-color: #f9f9f9;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        font-size: 18px;
+        line-height: 2;
+    }
+
+    .details label {
+        margin-bottom: 10px;
+        color: #444;
+    }
+
+    .setting-buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        margin-top: 30px;
+    }
+
+    .buttons {
+        padding: 10px 25px;
+        font-size: 16px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        width: 220px;
+    }
+
+    .buttons:hover {
+        background-color: #45a049;
+    }
+
+    /* Danger style for delete button */
+    #delete-account {
+        background-color: #f44336;
+    }
+
+    #delete-account:hover {
+        background-color: #d32f2f;
+    }
+</style>
+
+{% with msgs = get_flashed_messages(with_categories=true) %}
+{% if msgs %}
+{% for category, msg in msgs %}
+<div class="d-flex justify-content-center">
+    <div class="alert alert-{{category}} alert-dismissible fade show text-center w-50" role="alert">
+        {{ msg }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+
+
+<h2>Settings</h2>
+
+<div class="details" style="display: flex; flex-direction: column;">
+    <label>Email : {{email}}</label>
+    <label>Username : {{user_name}} </label>
+</div>
+
+<div class="setting-buttons ">
+    <a href="{{ url_for('changeEmail') }}"><button class="buttons">Change Email</button></a>
+    <a href="{{ url_for('change_password') }}"><button class="buttons">Change Password</button></a>
+    <form action="{{ url_for('delete_account') }}" method="POST"
+        onsubmit="return confirm('Are you sure you want to delete your account? This cannot be undone.')">
+        <button type="submit" class="buttons" id="delete-account">Delete Account</button>
+    </form>
+
+</div>
+
+
+
+
+{%endblock%}

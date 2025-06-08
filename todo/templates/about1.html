@@ -1,0 +1,243 @@
+{% block content %}
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    crossorigin="anonymous" />
+
+<style>
+    .container {
+        max-width: 80%;
+        margin: 3rem auto;
+        padding: 0 1rem;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #333;
+        line-height: 1.6;
+    }
+
+    h1,
+    h2 {
+        color: #2c3e50;
+        font-weight: 700;
+    }
+
+    h1 {
+        font-size: 2.8rem;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        border-bottom: 3px solid #2980b9;
+        padding-bottom: 0.5rem;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+        margin-top: 2.5rem;
+        margin-bottom: 1rem;
+        border-left: 4px solid #2980b9;
+        padding-left: 0.8rem;
+    }
+
+    .lead {
+        font-size: 1.2rem;
+        color: #555;
+        margin-bottom: 2rem;
+        font-weight: 500;
+    }
+
+    ul.list-group {
+        border: none;
+        padding-left: 0;
+    }
+
+    ul.list-group li {
+        background: #ecf0f1;
+        border-radius: 8px;
+        padding: 12px 20px;
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+        transition: background-color 0.3s ease;
+    }
+
+    ul.list-group li:hover {
+        background: #3498db;
+        color: white;
+        cursor: default;
+    }
+
+    section {
+        transition: transform 0.3s ease;
+    }
+
+    section:hover {
+        transform: translateY(-5px);
+    }
+
+    p {
+        font-size: 1rem;
+        color: #444;
+    }
+
+    .reach-us {
+        background: hsl(256, 66%, 85%);
+        border-radius: 8px;
+        padding: 2rem 1.5rem;
+        margin-top: 3rem;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .reach-us h2 {
+        border-left: none;
+        margin-bottom: 1rem;
+    }
+
+    .quote {
+        font-style: italic;
+        font-size: 1.2rem;
+        margin-top: 0.5rem;
+        color: #dfe9f3;
+    }
+
+    @media (max-width: 600px) {
+        h1 {
+            font-size: 2rem;
+        }
+
+        h2 {
+            font-size: 1.4rem;
+        }
+
+        ul.list-group li {
+            font-size: 1rem;
+        }
+
+    }
+
+
+
+    nav.navbar {
+        margin-bottom: 5rem;
+        position: relative;
+
+    }
+
+    nav {
+        background: linear-gradient(to right, #5f2c82, #49a09d);
+        /* purple-teal gradient */
+        border: none;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+    }
+</style>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg py-3" style="font-size: 1.8rem;">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+
+        <!-- Brand aligned left -->
+        <a class="navbar-brand text-white" style="font-size: 2.4rem; font-family: cursive;" href=" #">TodoListApp</a>
+
+        <!-- Right side nav links and profile dropdown -->
+        <div class="d-flex align-items-center" style="font-family: cursive;">
+            <ul class=" navbar-nav d-flex flex-row me-4" style="font-size: 1.7rem;">
+                <li class="nav-item me-3">
+                    <a class="nav-link text-white px-4" href="{{url_for('landing_page')}}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white px-4" href="{{url_for('about_page')}}">Help/About</a>
+                </li>
+                <li>
+                    <a class="nav-link text-white px-4" href="{{url_for('signup_page')}}">Sign up</a>
+                </li>
+            </ul>
+
+
+        </div>
+
+    </div>
+</nav>
+
+<div class="container my-5">
+
+    <h1 class="mb-4 text-center">About Multi-User Todo List</h1>
+
+    <p class="lead text-center">
+        Welcome to <strong>Multi-User Todo List</strong> — your go-to task manager designed to keep you organized,
+        motivated, and on track.
+    </p>
+
+    <section class="mt-5">
+        <h2>What is this app?</h2>
+        <p>
+            This is a web-based Todo List application that allows multiple users to sign up, log in, and manage their
+            tasks privately and securely.
+            Customize your task list by setting priorities, due dates, and tracking progress with intuitive status
+            indicators.
+        </p>
+    </section>
+
+    <section class="mt-4">
+        <h2>Why choose this app?</h2>
+        <p>
+            Life gets busy — deadlines, priorities, and to-dos pile up fast. Our app simplifies task management by
+            helping you focus on what matters most,
+            avoid missed deadlines, and boost your productivity — all through a clean, user-friendly interface.
+        </p>
+    </section>
+
+    <section class="mt-4">
+        <h2>Who is it for?</h2>
+        <p>
+            Whether you're a student juggling assignments, a professional balancing projects, or anyone looking to bring
+            order to your daily routine,
+            this app was made with you in mind.
+        </p>
+    </section>
+
+    <section class="mt-5">
+        <h2>Key Features</h2>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">🔐 Secure user registration and login</li>
+            <li class="list-group-item">📝 Personalized task lists for every user</li>
+            <li class="list-group-item">✏️ Easy task creation, editing, and deletion with priority & due date options
+            </li>
+            <li class="list-group-item">📊 Track task progress: Not started, In progress, Completed</li>
+            <li class="list-group-item">📈 Visual statistics with interactive charts for task status and priorities</li>
+            <li class="list-group-item">📅 Calendar view for clear visibility of upcoming deadlines</li>
+        </ul>
+    </section>
+
+    <section class="mt-5">
+        <h2>What’s next?</h2>
+        <p>
+            We're committed to making your task management even better. Upcoming features include task sharing, smart
+            reminders, and mobile app integration.
+            Stay tuned for exciting updates!
+        </p>
+    </section>
+
+    <section class="reach-us">
+        <h2>Reach Us</h2>
+        <p>Have questions or feedback? We'd love to hear from you! Feel free to send your queries anytime at
+
+            <a href="mailto:benojeffry08@gmail.com"
+                style="color:hsl(100, 100%, 25%); text-decoration: underline;">benojeffry08@gmail.com</a>.
+        </p>
+    </section>
+
+
+    <footer class="footer mt-5 py-4 text-center" style="background-color: #f8f9fa; color: #555;">
+        <div>
+            <p>&copy; 2025 Multi-User Todo List. All rights reserved.</p>
+            <p>
+                Made with ❤️ by <strong>Beno Jeffry</strong>
+            </p>
+        </div>
+    </footer>
+
+
+</div>
+
+
+<!-- Bootstrap JS Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    crossorigin="anonymous"></script>
+{% endblock %}

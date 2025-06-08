@@ -1,0 +1,22 @@
+body {
+    background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+    /* soft sky blue gradient */
+    color: #1e3a8a;
+    background-color: #f5f7fa;
+    /* very soft gray fallback */
+}
+
+.custom-login-card {
+    background: linear-gradient(to right, #5f2c82, #49a09d);
+    /* purple-teal gradient */
+    border: none;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+}
+
+/* Focus styles for input */
+.form-control:focus {
+    border-color: #fbc02d !important;
+    box-shadow: 0 0 0 0.3rem rgba(251, 192, 45, 0.6);
+}
+
+
