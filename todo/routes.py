@@ -5,6 +5,9 @@ from todo.models import User, Tasks
 from datetime import datetime, timedelta
 from todo import bcrypt
 
+from itsdangerous import URLSafeTimedSerializer
+
+
 @app.route("/")
 def landing_page():
     return render_template("index.html")
@@ -301,5 +304,68 @@ def delete_account():
 
     flash("Account deleted successfully." , 'success')
     return redirect("/")
+
+
+
+
+
+
+
+def generate_reset_token(email):
+    s = URLSafeTimedSerializer(app.secret_key)
+    return s.dumps({'email' : email})
+
+
+
+@app.route("/forgot_password" , methods = ["POST" ,"GET"])
+def forgot_password():
+    if request.method == "POST":
+        current_email = request.form.get('email')
+        user = User.query.filter_by(email=current_email).first()
+        if user:
+            print(user.email)
+            token = generate_reset_token(user.email)
+            reset_url = url_for('reset_password', token = token, _external=True) # which makes the token str into links(URL)
+            print(f"Reset URL (simulated email): {reset_url}") # This has to be Mailed
+            return redirect('forgot_password')
+            
+        else:
+            print("email not found..!")
+            return redirect("forget_password")
+    return render_template("forget_password.html")
+
+
+
+def verify_token(token, max_age=60):
+    s = URLSafeTimedSerializer(app.secret_key)
+    try:
+        data = s.loads(token, max_age=max_age)
+        print(data)
+        return data['email']
+    except Exception:
+        return None
+        
+    
+@app.route('/reset_password/<token>' , methods = ["POST" ,"GET"])
+def reset_password(token):
+    email = verify_token(token)
+    if not email:
+        print("Invalid or expired token.", "danger")
+        return redirect(url_for('forgot_password'))
+
+    if request.method == "POST":
+        new_password = request.form.get('new_password')
+        confirm_password = request.form.get('confirm_password')
+
+        if new_password == confirm_password:
+            user = User.query.filter_by(email=email).first()
+            hashed_password = bcrypt.generate_password_hash(new_password).decode('utf-8')
+            user.password = hashed_password
+            db.session.commit()
+            print("Password reset successful. Please login.")
+            return redirect(url_for('login_page'))
+    
+    return render_template('reset_password.html')
+
 
 
