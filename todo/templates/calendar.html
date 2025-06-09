@@ -17,7 +17,7 @@
     document.addEventListener('DOMContentLoaded', function () {
         const calendarEl = document.getElementById('calendar');
 
-        // 🟡 Get events from data-attribute
+        //  Get events from data-attribute
         const eventsData = JSON.parse(calendarEl.dataset.events);
 
         const calendar = new FullCalendar.Calendar(calendarEl, {

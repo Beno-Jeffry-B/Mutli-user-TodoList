@@ -4,100 +4,121 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Landling Page</title>
+    <title>Landing Page</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         crossorigin="anonymous" />
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
 
     <style>
-        .start-btn {
-            background: hsl(0, 100%, 65%);
-            border: none;
-            color: white;
-            margin: 0 auto;
-            padding: 0.75rem 2.5rem;
-            font-size: 1.2rem;
-            border-radius: 0.4rem;
-            cursor: pointer;
-            /* Infinite pulse animation with scale */
-            animation: pulse-scale 1s infinite ease-in-out;
-            transition: transform 0.3s ease;
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            font-family: Arial, sans-serif;
         }
 
-
-        .start-btn:hover {
-            color: white;
-            background-position: right;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-        }
-
-
-
-        @keyframes pulse-scale {
-
-            0% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.05);
-            }
-        }
-
-
-
-        nav.navbar {
-            margin-bottom: 5rem;
-            position: relative;
-
+        .content-wrapper {
+            flex: 1;
         }
 
         nav {
             background: linear-gradient(to right, #5f2c82, #49a09d);
-            /* purple-teal gradient */
-            border: none;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+        }
+
+        .navbar-brand {
+            font-size: 2rem;
+            font-family: cursive;
+            transition: font-size 0.3s ease;
+            color: white !important;
+        }
+
+        .navbar-nav {
+            font-family: cursive;
+        }
+
+        .nav-link {
+            color: white !important;
+            font-size: 1.1rem;
+            margin-left: 1rem;
+            transition: font-size 0.3s ease, margin 0.3s ease;
+        }
+
+        @media (min-width: 768px) {
+            .navbar-brand {
+                font-size: 2.8rem;
+            }
+
+            .nav-link {
+                font-size: 1.8rem;
+                margin-left: 2rem;
+            }
+        }
+
+        .start-btn {
+            background: hsl(0, 100%, 65%);
+            border: none;
+            color: white;
+            padding: 0.75rem 2.5rem;
+            font-size: 1.2rem;
+            border-radius: 0.4rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .start-btn:hover {
+            color: #f8f9fa;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            background-color: hsl(0, 100%, 60%);
+        }
+
+        footer.footer {
+            background-color: #f8f9fa;
+            color: #555;
+            text-align: center;
+            padding: 1.5rem 0;
         }
     </style>
 </head>
 
 <body>
 
-
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg py-3" style="font-size: 1.8rem;">
-        <div class="container-fluid d-flex justify-content-between align-items-center">
-
-            <!-- Brand aligned left -->
-            <a class="navbar-brand text-white" style="font-size: 2.4rem; font-family: cursive;"
-                href=" #">TodoListApp</a>
-
-            <!-- Right side nav links and profile dropdown -->
-            <div class="d-flex align-items-center" style="font-family: cursive;">
-                <ul class=" navbar-nav d-flex flex-row me-4" style="font-size: 1.7rem;">
-                    <li class="nav-item me-3">
-                        <a class="nav-link text-white px-4" href="{{url_for('landing_page')}}">Home</a>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Taskify</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('landing_page')}}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white px-4" href="{{url_for('about_page')}}">Help/About</a>
+                        <a class="nav-link" href="{{url_for('about_page')}}">Help/About</a>
                     </li>
-                    <li>
-                        <a class="nav-link text-white px-4" href="{{url_for('signup_page')}}">Sign up</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('signup_page')}}">Sign up</a>
                     </li>
                 </ul>
-
-
             </div>
-
         </div>
     </nav>
 
+    <!-- Flash messages -->
     {% with msgs = get_flashed_messages(with_categories=true) %}
     {% if msgs %}
     {% for category, msg in msgs %}
-    <div class="d-flex justify-content-center">
-        <div class="alert alert-{{category}} alert-dismissible fade show text-center w-50" role="alert">
+    <div class="container mt-3">
+        <div class="alert alert-{{ category }} alert-dismissible fade show text-center" role="alert">
             {{ msg }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
@@ -106,37 +127,24 @@
     {% endif %}
     {% endwith %}
 
-
-
-    <div class="main-container" style="margin-bottom:110px; margin-top: 120px;">
-        <div class="quote" , style="text-align: center; font-size: 3rem; font-family: cursive;">
-            <p>Ready to make your day productive?</p>
-        </div>
-
-        <div style="display: flex; justify-content: center; margin-top: 4rem;">
-            <a class="btn btn-lg px-5 start-btn" href="{{url_for('signup_page')}}" style="text-decoration: none;">
+    <!-- Main Content -->
+    <div class="content-wrapper">
+        <div class="container text-center my-5 py-5">
+            <div class="quote mb-5 mt-5" style="font-family: cursive;">
+                <h1 class="display-5">Ready to make your day productive?</h1>
+            </div>
+            <a class="start-btn btn btn-lg mt-3" href="{{url_for('signup_page')}}" style="text-decoration: none;">
                 Explore
             </a>
         </div>
     </div>
 
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 Taskify. All rights reserved.</p>
+        <p>Made with ❤️ by <strong>Beno Jeffry</strong></p>
+    </footer>
 
-    <!-- Bootstrap JS Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        crossorigin="anonymous"></script>
 </body>
 
-
-
-
-
 </html>
-
-<footer class="footer mt-5 py-5 text-center" style=" color: #555;">
-    <div>
-        <p>&copy; 2025 Multi-User Todo List. All rights reserved.</p>
-        <p>
-            Made with ❤️ by <strong>Beno Jeffry</strong>
-        </p>
-    </div>
-</footer>

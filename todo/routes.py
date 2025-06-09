@@ -27,7 +27,7 @@ def login_page():
         current_user_name = form.user_name.data
         current_password = form.password.data
         user = User.query.filter_by(user_name=current_user_name).first()
-        if user and bcrypt.check_password_hash(user.password, current_password):  # check the hash
+        if user and bcrypt.check_password_hash(user.password, current_password):  
             session['user_id'] = user.user_id
             return redirect(url_for('home_page'))
         else:
@@ -38,23 +38,43 @@ def login_page():
         return render_template("login.html", form=form)
 
 
+from sqlalchemy.exc import IntegrityError
+
 @app.route("/sign_up", methods=['POST', 'GET'])
 def signup_page():
     form = sign_up()
     if form.validate_on_submit():
         user_name = form.user_name.data
         raw_password = form.password.data
-        hashed_password = bcrypt.generate_password_hash(raw_password).decode('utf-8')  # hash the password
+        hashed_password = bcrypt.generate_password_hash(raw_password).decode('utf-8')
         email = form.email.data
         user = User(user_name=user_name, password=hashed_password, email=email)
-        db.session.add(user)
-        db.session.commit()
-        return redirect(url_for('login_page'))
+
+        try:
+            db.session.add(user)
+            db.session.commit()
+            flash("Account created successfully!", "success")
+            return redirect(url_for('login_page'))
+
+        except IntegrityError as e:
+            db.session.rollback()
+            error_msg = str(e.orig)
+
+            if "UNIQUE constraint failed: user.user_name" in error_msg:
+                flash("Username already taken. Please choose a different one.", "danger")
+            elif "UNIQUE constraint failed: user.email" in error_msg:
+                flash("Email already registered. Please use a different one.", "danger")
+            else:
+                flash("An error occurred while creating your account. Please try again.", "danger")
+
+
     else:
         for field, error_msg in form.errors.items():
             for err in error_msg:
                 flash(f'{err}', 'warning')
-        return render_template("signup.html", form=form)
+
+    return render_template("signup.html", form=form)
+
 
 
 
@@ -70,7 +90,6 @@ def createlist():
         flash("Please login to access your tasks.", "warning")
         return redirect(url_for('login_page'))
 
-    # Handle POST
     if request.method == "POST":
         if 'submit' in request.form:
             input_task = request.form['input_task']
@@ -81,6 +100,24 @@ def createlist():
             db.session.add(task)
             db.session.commit()
             flash("Task Added Successfully!", "success")
+            return redirect(url_for('createlist'))
+
+        elif 'priority_update_btn' in request.form:
+            task_id = request.form['task_id']
+            new_priority = request.form['new_priority']
+            task = Tasks.query.get(task_id)
+            if task:
+                task.priority = new_priority
+                db.session.commit()
+            return redirect(url_for('createlist'))  
+
+        elif 'due_date_update_btn' in request.form:
+            task_id = request.form['task_id']
+            new_due_date = request.form['new_due_date']
+            task = Tasks.query.get(task_id)
+            if task and new_due_date:
+                task.due_date = datetime.strptime(new_due_date, '%Y-%m-%d').date()
+                db.session.commit()
             return redirect(url_for('createlist'))
 
         elif 'delete_task' in request.form:
@@ -341,7 +378,7 @@ If you did not request a password reset, please ignore this email.
 '''
             mail.send(msg)
 
-            flash("Password reset link sent! Please check your email.", "success")
+            flash("Password reset link sent! Please check your email.", "info")
             return redirect(url_for('forgot_password'))
         else:
             flash("Email not found. Please try again.", "danger")

@@ -1,243 +1,298 @@
-{% block content %}
-<!-- Bootstrap CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    crossorigin="anonymous" />
+<!DOCTYPE html>
+<html lang="en">
 
-<style>
-    .container {
-        max-width: 80%;
-        margin: 3rem auto;
-        padding: 0 1rem;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        color: #333;
-        line-height: 1.6;
-    }
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>About Page</title>
 
-    h1,
-    h2 {
-        color: #2c3e50;
-        font-weight: 700;
-    }
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        crossorigin="anonymous" />
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
 
-    h1 {
-        font-size: 2.8rem;
-        margin-bottom: 1rem;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        border-bottom: 3px solid #2980b9;
-        padding-bottom: 0.5rem;
-    }
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
 
-    h2 {
-        font-size: 1.8rem;
-        margin-top: 2.5rem;
-        margin-bottom: 1rem;
-        border-left: 4px solid #2980b9;
-        padding-left: 0.8rem;
-    }
+        body {
+            font-family: Arial, sans-serif;
+        }
 
-    .lead {
-        font-size: 1.2rem;
-        color: #555;
-        margin-bottom: 2rem;
-        font-weight: 500;
-    }
+        .main-container {
+            flex: 1 0 auto;
+        }
 
-    ul.list-group {
-        border: none;
-        padding-left: 0;
-    }
+        footer {
+            flex-shrink: 0;
+            background-color: #f8f9fa;
+            font-size: 1rem;
+            padding: 1rem 0;
+        }
 
-    ul.list-group li {
-        background: #ecf0f1;
-        border-radius: 8px;
-        padding: 12px 20px;
-        margin-bottom: 10px;
-        font-size: 1.1rem;
-        transition: background-color 0.3s ease;
-    }
 
-    ul.list-group li:hover {
-        background: #3498db;
-        color: white;
-        cursor: default;
-    }
+        nav {
+            background: linear-gradient(to right, #5f2c82, #49a09d);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+        }
 
-    section {
-        transition: transform 0.3s ease;
-    }
-
-    section:hover {
-        transform: translateY(-5px);
-    }
-
-    p {
-        font-size: 1rem;
-        color: #444;
-    }
-
-    .reach-us {
-        background: hsl(256, 66%, 85%);
-        border-radius: 8px;
-        padding: 2rem 1.5rem;
-        margin-top: 3rem;
-        text-align: center;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .reach-us h2 {
-        border-left: none;
-        margin-bottom: 1rem;
-    }
-
-    .quote {
-        font-style: italic;
-        font-size: 1.2rem;
-        margin-top: 0.5rem;
-        color: #dfe9f3;
-    }
-
-    @media (max-width: 600px) {
-        h1 {
+        /* Navbar brand and links default (mobile first) */
+        .navbar-brand {
             font-size: 2rem;
+            font-family: cursive;
+            transition: font-size 0.3s ease;
+        }
+
+        .navbar-nav {
+            font-family: cursive;
+        }
+
+        .nav-link {
+            color: white !important;
+            font-size: 1.1rem;
+            margin-left: 1rem;
+            transition: font-size 0.3s ease, margin 0.3s ease;
+        }
+
+        /* Larger screen styles */
+        @media (min-width: 768px) {
+            .navbar-brand {
+                font-size: 2.8rem;
+            }
+
+            .nav-link {
+                font-size: 1.8rem;
+                margin-left: 2rem;
+            }
+
+        }
+
+        h1,
+        h2 {
+            color: #2c3e50;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 3px solid #2980b9;
+            padding-bottom: 0.5rem;
         }
 
         h2 {
-            font-size: 1.4rem;
+            font-size: 1.8rem;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #2980b9;
+            padding-left: 0.8rem;
+        }
+
+        .lead {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        ul.list-group {
+            border: none;
+            padding-left: 0;
         }
 
         ul.list-group li {
-            font-size: 1rem;
+            background: #ecf0f1;
+            border-radius: 8px;
+            padding: 12px 20px;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease;
         }
 
-    }
+        ul.list-group li:hover {
+            background: #3498db;
+            color: white;
+            cursor: default;
+        }
 
+        section {
+            transition: transform 0.3s ease;
+        }
 
+        section:hover {
+            transform: translateY(-5px);
+        }
 
-    nav.navbar {
-        margin-bottom: 5rem;
-        position: relative;
+        p {
+            font-size: 1rem;
+            color: #444;
+        }
 
-    }
+        .reach-us {
+            background: hsl(256, 66%, 85%);
+            border-radius: 8px;
+            padding: 2rem 1.5rem;
+            margin-top: 3rem;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
 
-    nav {
-        background: linear-gradient(to right, #5f2c82, #49a09d);
-        /* purple-teal gradient */
-        border: none;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
-    }
-</style>
+        .reach-us h2 {
+            border-left: none;
+            margin-bottom: 1rem;
+        }
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg py-3" style="font-size: 1.8rem;">
-    <div class="container-fluid d-flex justify-content-between align-items-center">
+        .quote {
+            font-style: italic;
+            font-size: 1.2rem;
+            margin-top: 0.5rem;
+            color: #dfe9f3;
+        }
 
-        <!-- Brand aligned left -->
-        <a class="navbar-brand text-white" style="font-size: 2.4rem; font-family: cursive;" href=" #">TodoListApp</a>
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
 
-        <!-- Right side nav links and profile dropdown -->
-        <div class="d-flex align-items-center" style="font-family: cursive;">
-            <ul class=" navbar-nav d-flex flex-row me-4" style="font-size: 1.7rem;">
-                <li class="nav-item me-3">
-                    <a class="nav-link text-white px-4" href="{{url_for('landing_page')}}">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white px-4" href="{{url_for('about_page')}}">Help/About</a>
-                </li>
-                <li>
-                    <a class="nav-link text-white px-4" href="{{url_for('signup_page')}}">Sign up</a>
-                </li>
-            </ul>
+            h2 {
+                font-size: 1.4rem;
+            }
 
+            ul.list-group li {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
 
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Taskify</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('landing_page')}}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('about_page')}}">Help/About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('signup_page')}}">Sign up</a>
+                    </li>
+                </ul>
+            </div>
         </div>
+    </nav>
+
+    <!-- Flash messages -->
+    {% with msgs = get_flashed_messages(with_categories=true) %}
+    {% if msgs %}
+    {% for category, msg in msgs %}
+    <div class="container mt-3">
+        <div class="alert alert-{{ category }} alert-dismissible fade show text-center" role="alert">
+            {{ msg }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <div class="container my-5">
+
+        <h1 class="mb-4 text-center">About Taskify</h1>
+
+
+
+        <section class="mt-5">
+            <h2>What is this app?</h2>
+            <p>
+                This is a web-based Todo List application that allows multiple users to sign up, log in, and manage
+                their
+                tasks privately and securely.
+                Customize your task list by setting priorities, due dates, and tracking progress with intuitive status
+                indicators.
+            </p>
+        </section>
+
+        <section class="mt-4">
+            <h2>Why choose this app?</h2>
+            <p>
+                Life gets busy — deadlines, priorities, and to-dos pile up fast. Our app simplifies task management by
+                helping you focus on what matters most,
+                avoid missed deadlines, and boost your productivity — all through a clean, user-friendly interface.
+            </p>
+        </section>
+
+        <section class="mt-4">
+            <h2>Who is it for?</h2>
+            <p>
+                Whether you're a student juggling assignments, a professional balancing projects, or anyone looking to
+                bring
+                order to your daily routine,
+                this app was made with you in mind.
+            </p>
+        </section>
+
+        <section class="mt-5">
+            <h2>Key Features</h2>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">🔐 Secure user registration and login</li>
+                <li class="list-group-item">📝 Personalized task lists for every user</li>
+                <li class="list-group-item">✏️ Easy task creation, editing, and deletion with priority & due date
+                    options </li>
+                <li class="list-group-item">📊 Track task progress: Not started, In progress, Completed</li>
+                <li class="list-group-item">📈 Visual statistics with interactive charts for task status and priorities
+                </li>
+                <li class="list-group-item">📅 Calendar view for clear visibility of upcoming deadlines</li>
+            </ul>
+        </section>
+
+        <section class="mt-5">
+            <h2>What’s next?</h2>
+            <p>
+                We're committed to making your task management even better. Upcoming features include task sharing,
+                smart
+                reminders, and mobile app integration.
+                Stay tuned for exciting updates!
+            </p>
+        </section>
+
+        <section class="reach-us">
+            <h2>Reach Us</h2>
+            <p>Have questions or feedback? We'd love to hear from you! Feel free to send your queries anytime at
+
+                <a href="mailto:taskifybyjeff@gmail.com"
+                    style="color:hsl(100, 100%, 25%); text-decoration: underline;">taskifybyjeff@gmail.com</a>.
+            </p>
+        </section>
 
     </div>
-</nav>
+</body>
 
-<div class="container my-5">
-
-    <h1 class="mb-4 text-center">About Multi-User Todo List</h1>
-
-    <p class="lead text-center">
-        Welcome to <strong>Multi-User Todo List</strong> — your go-to task manager designed to keep you organized,
-        motivated, and on track.
-    </p>
-
-    <section class="mt-5">
-        <h2>What is this app?</h2>
+<footer class="footer mt-5 py-4 text-center" style="background-color: #f8f9fa; color: #555;">
+    <div>
+        <p>&copy; 2025 Taskify. All rights reserved.</p>
         <p>
-            This is a web-based Todo List application that allows multiple users to sign up, log in, and manage their
-            tasks privately and securely.
-            Customize your task list by setting priorities, due dates, and tracking progress with intuitive status
-            indicators.
+            Made with ❤️ by <strong>Beno Jeffry</strong>
         </p>
-    </section>
+    </div>
+</footer>
 
-    <section class="mt-4">
-        <h2>Why choose this app?</h2>
-        <p>
-            Life gets busy — deadlines, priorities, and to-dos pile up fast. Our app simplifies task management by
-            helping you focus on what matters most,
-            avoid missed deadlines, and boost your productivity — all through a clean, user-friendly interface.
-        </p>
-    </section>
-
-    <section class="mt-4">
-        <h2>Who is it for?</h2>
-        <p>
-            Whether you're a student juggling assignments, a professional balancing projects, or anyone looking to bring
-            order to your daily routine,
-            this app was made with you in mind.
-        </p>
-    </section>
-
-    <section class="mt-5">
-        <h2>Key Features</h2>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">🔐 Secure user registration and login</li>
-            <li class="list-group-item">📝 Personalized task lists for every user</li>
-            <li class="list-group-item">✏️ Easy task creation, editing, and deletion with priority & due date options
-            </li>
-            <li class="list-group-item">📊 Track task progress: Not started, In progress, Completed</li>
-            <li class="list-group-item">📈 Visual statistics with interactive charts for task status and priorities</li>
-            <li class="list-group-item">📅 Calendar view for clear visibility of upcoming deadlines</li>
-        </ul>
-    </section>
-
-    <section class="mt-5">
-        <h2>What’s next?</h2>
-        <p>
-            We're committed to making your task management even better. Upcoming features include task sharing, smart
-            reminders, and mobile app integration.
-            Stay tuned for exciting updates!
-        </p>
-    </section>
-
-    <section class="reach-us">
-        <h2>Reach Us</h2>
-        <p>Have questions or feedback? We'd love to hear from you! Feel free to send your queries anytime at
-
-            <a href="mailto:benojeffry08@gmail.com"
-                style="color:hsl(100, 100%, 25%); text-decoration: underline;">benojeffry08@gmail.com</a>.
-        </p>
-    </section>
-
-
-    <footer class="footer mt-5 py-4 text-center" style="background-color: #f8f9fa; color: #555;">
-        <div>
-            <p>&copy; 2025 Multi-User Todo List. All rights reserved.</p>
-            <p>
-                Made with ❤️ by <strong>Beno Jeffry</strong>
-            </p>
-        </div>
-    </footer>
-
-
-</div>
-
-
-<!-- Bootstrap JS Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    crossorigin="anonymous"></script>
-{% endblock %}
+</html>
