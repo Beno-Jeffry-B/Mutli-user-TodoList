@@ -96,7 +96,8 @@ Create Tasks{% endblock %}
                     <option value="Medium">Medium</option>
                     <option value="High">High</option>
                 </select>
-                <input type="date" name="new_due_date" class="form-control mb-3">
+                <label class="mt-1 mb-2">Select Due Date:</label>
+                <input type="date" name="new_due_date" class="form-control mb-3" placeholder="Select Due Date">
             </div>
             <div class="modal-footer">
                 <button type="submit" name="submit" class="btn btn-primary w-100">Add Task</button>
@@ -173,8 +174,11 @@ Create Tasks{% endblock %}
                         <input type="text" class="form-control mb-2" name="updated_task" value="{{ task.tasks }}"
                             required>
 
+                        <label class="mt-1 mb-2">Select Due Date:</label>
+
                         <input type="date" name="updated_due_date" class="form-control mb-2"
-                            value="{{ task.due_date.strftime('%Y-%m-%d') if task.due_date }}">
+                            value="{{ task.due_date.strftime('%Y-%m-%d') if task.due_date }}"
+                            placeholder="Select Due Date">
 
                         <select name="updated_priority" class="form-select mb-2">
                             <option value="Low" {% if task.priority=='Low' %}selected{% endif %}>Low</option>
