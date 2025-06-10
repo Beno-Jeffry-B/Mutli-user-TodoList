@@ -38,6 +38,15 @@ def login_page():
         return render_template("login.html", form=form)
 
 
+
+
+@app.route('/logout')
+def logout():
+    session.clear()  
+    return redirect(url_for('login_page'))
+
+
+
 from sqlalchemy.exc import IntegrityError
 
 @app.route("/sign_up", methods=['POST', 'GET'])
@@ -423,7 +432,6 @@ def reset_password(token):
             flash("Passwords do not match. Try again.", "danger")
 
     return render_template('reset_password.html')
-
 
 
 
