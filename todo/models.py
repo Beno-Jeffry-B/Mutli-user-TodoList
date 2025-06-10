@@ -4,8 +4,8 @@ from todo import db
 class User(db.Model):
     user_id = db.Column(db.Integer , primary_key = True )
     user_name = db.Column(db.String(50),unique =True)
-    email = db.Column(db.String(50),unique =True)
-    password = db.Column(db.String(30))
+    email = db.Column(db.String(120),unique =True)
+    password = db.Column(db.String(128))
     
     # Relationship: one user can have many tasks
     tasks = db.relationship('Tasks', backref='user', lazy=True)
