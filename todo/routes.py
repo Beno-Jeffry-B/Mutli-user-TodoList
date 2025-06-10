@@ -92,6 +92,7 @@ import matplotlib.pyplot as plt
 import io
 from matplotlib.figure import Figure
 
+
 @app.route("/createlist", methods=['POST', 'GET'])
 def createlist():
     user_id = session.get('user_id')
@@ -100,17 +101,24 @@ def createlist():
         return redirect(url_for('login_page'))
 
     if request.method == "POST":
+        # ADD Task (Mobile + Desktop compatibility)
         if 'submit' in request.form:
-            input_task = request.form['input_task']
-            priority = request.form.get('priority') or 'Low'
-            due_date = request.form.get('due_date')
-            due_date = datetime.strptime(due_date, '%Y-%m-%d').date() if due_date else None
+            input_task = request.form.get('input_task')
+            
+            # Handle both 'priority' and 'new_priority'
+            priority = request.form.get('priority') or request.form.get('new_priority') or 'Low'
+
+            # Handle both 'due_date' and 'new_due_date'
+            due_date_str = request.form.get('due_date') or request.form.get('new_due_date')
+            due_date = datetime.strptime(due_date_str, '%Y-%m-%d').date() if due_date_str else None
+
             task = Tasks(tasks=input_task, priority=priority, due_date=due_date, user_id=user_id)
             db.session.add(task)
             db.session.commit()
             flash("Task Added Successfully!", "success")
             return redirect(url_for('createlist'))
 
+        # Update priority (desktop)
         elif 'priority_update_btn' in request.form:
             task_id = request.form['task_id']
             new_priority = request.form['new_priority']
@@ -120,6 +128,7 @@ def createlist():
                 db.session.commit()
             return redirect(url_for('createlist'))  
 
+        # Update due date (desktop)
         elif 'due_date_update_btn' in request.form:
             task_id = request.form['task_id']
             new_due_date = request.form['new_due_date']
@@ -129,6 +138,7 @@ def createlist():
                 db.session.commit()
             return redirect(url_for('createlist'))
 
+        # Delete task
         elif 'delete_task' in request.form:
             task = Tasks.query.filter_by(task_id=request.form['task_id'], user_id=user_id).first()
             if task:
@@ -137,17 +147,19 @@ def createlist():
                 flash("Task Deleted Successfully!", "success")
             return redirect(url_for('createlist'))
 
+        # Edit task (mobile + desktop)
         elif 'edit_task' in request.form:
             task = Tasks.query.filter_by(task_id=request.form['task_id'], user_id=user_id).first()
             if task:
                 task.tasks = request.form['updated_task']
-                task.priority = request.form.get('updated_priority')
+                task.priority = request.form.get('updated_priority') or task.priority
                 due = request.form.get('updated_due_date')
-                task.due_date = datetime.strptime(due, '%Y-%m-%d').date() if due else None
+                task.due_date = datetime.strptime(due, '%Y-%m-%d').date() if due else task.due_date
                 db.session.commit()
                 flash("Task Updated Successfully!", "success")
             return redirect(url_for('createlist'))
 
+        # Update status (mobile + desktop)
         elif 'status_update_btn' in request.form:
             task = Tasks.query.filter_by(task_id=request.form['task_id'], user_id=user_id).first()
             if task:
@@ -156,7 +168,7 @@ def createlist():
                 flash("Status Updated Successfully!", "success")
             return redirect(url_for('createlist'))
 
- # Handle GET and filtering
+    # Handle GET and filtering
     filter_val = request.args.get('filter')
     query = Tasks.query.filter_by(user_id=user_id)
     today = datetime.today().date()
