@@ -447,3 +447,42 @@ def reset_password(token):
 
 
 
+
+
+
+
+
+
+# DB testing
+
+from flask import Blueprint, jsonify, request
+debug_bp = Blueprint('debug', __name__)
+
+
+
+@debug_bp.route('/debug/users', methods=['GET'])
+def debug_users():
+    secret_token = request.headers.get('X-API-KEY')
+    
+    if secret_token != 'taskify-debug-key': # Debug-Key
+        return jsonify({'error': 'Unauthorized'}), 403
+
+    users = User.query.all()
+    user_data = [{'id': user.user_id, 'username': user.user_name, 'email': user.email} for user in users]
+
+    return jsonify({'user_count': len(users), 'users': user_data})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
