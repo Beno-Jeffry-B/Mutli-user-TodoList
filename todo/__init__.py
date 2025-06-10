@@ -8,18 +8,8 @@ load_dotenv()
 app = Flask(__name__)
 app.secret_key = os.getenv('APP_SECRET_KEY')
 
-# Fix for PostgreSQL on Render 
-uri = os.getenv("DATABASE_URL")
-if uri and uri.startswith("postgres://"):
-    uri = uri.replace("postgres://", "postgresql://", 1)
-app.config['SQLALCHEMY_DATABASE_URI'] = uri
-
-
-
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///TASKIFY.db'
 db = SQLAlchemy(app)
-
-
-
 
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'  # Gmail SMTP server
 app.config['MAIL_PORT'] = 587
