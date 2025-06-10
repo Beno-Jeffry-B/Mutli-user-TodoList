@@ -172,44 +172,31 @@ Create Tasks{% endblock %}
                         <input type="hidden" name="task_id" value="{{ task.task_id }}">
                         <input type="text" class="form-control mb-2" name="updated_task" value="{{ task.tasks }}"
                             required>
+
+                        <input type="date" name="updated_due_date" class="form-control mb-2"
+                            value="{{ task.due_date.strftime('%Y-%m-%d') if task.due_date }}">
+
                         <select name="updated_priority" class="form-select mb-2">
                             <option value="Low" {% if task.priority=='Low' %}selected{% endif %}>Low</option>
                             <option value="Medium" {% if task.priority=='Medium' %}selected{% endif %}>Medium</option>
                             <option value="High" {% if task.priority=='High' %}selected{% endif %}>High</option>
                         </select>
-                        <input type="date" name="updated_due_date" class="form-control mb-2"
-                            value="{{ task.due_date.strftime('%Y-%m-%d') if task.due_date }}">
 
-
-                        <select name="updated_priority" class="form-select mb-2">
-                            <option value="Low" {% if task.priority=='Low' %}selected{% endif %}>Low</option>
-                            <option value="Medium" {% if task.priority=='Medium' %}selected{% endif %}>Medium
+                        <select name="new_status" class="form-select mb-2" onchange="this.form.submit()">
+                            <option value="not_started" {% if task.status=='not_started' %}selected{% endif %}>Not
+                                Started</option>
+                            <option value="in_progress" {% if task.status=='in_progress' %}selected{% endif %}>In
+                                Progress</option>
+                            <option value="completed" {% if task.status=='completed' %}selected{% endif %}>Completed
                             </option>
-                            <option value="High" {% if task.priority=='High' %}selected{% endif %}>High</option>
                         </select>
+
                         <input type="hidden" name="status_update_btn">
-
-
-
-                        <form method="POST" class="form-select mb-2">
-                            <input type="hidden" name="task_id" value="{{ task.task_id }}">
-                            <select name="new_status" class="form-select form-select-sm mb-2"
-                                onchange="this.form.submit()">
-                                <option value="not_started" {% if task.status=='not_started' %}selected{% endif %}>Not
-                                    Started</option>
-                                <option value="in_progress" {% if task.status=='in_progress' %}selected{% endif %}>In
-                                    Progress</option>
-                                <option value="completed" {% if task.status=='completed' %}selected{% endif %}>Completed
-                                </option>
-                            </select>
-                            <input type="hidden" name="status_update_btn">
-                        </form>
-
-
                         <button type="submit" name="edit_task" class="btn btn-sm btn-success w-100">Save
                             Changes</button>
                     </form>
                 </div>
+
             </div>
         </div>
     </div>
@@ -343,14 +330,7 @@ Create Tasks{% endblock %}
                                 <input type="hidden" name="task_id" value="{{ task.task_id }}">
                                 <input type="text" class="form-control mb-1" name="updated_task"
                                     value="{{ task.tasks }}" required>
-                                <select name="updated_priority" class="form-select mb-1">
-                                    <option value="Low" {% if task.priority=='Low' %}selected{% endif %}>Low</option>
-                                    <option value="Medium" {% if task.priority=='Medium' %}selected{% endif %}>Medium
-                                    </option>
-                                    <option value="High" {% if task.priority=='High' %}selected{% endif %}>High</option>
-                                </select>
-                                <input type="date" class="form-control mb-2" name="updated_due_date"
-                                    value="{{ task.due_date.strftime('%Y-%m-%d') if task.due_date }}">
+
                                 <button type="submit" name="edit_task"
                                     class="btn btn-success btn-sm w-100">Save</button>
                             </form>
