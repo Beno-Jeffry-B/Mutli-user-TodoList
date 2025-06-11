@@ -27,7 +27,6 @@ from flask_bcrypt import Bcrypt
 
 bcrypt = Bcrypt(app)
 
-
 from todo import models
 from todo import routes
 
