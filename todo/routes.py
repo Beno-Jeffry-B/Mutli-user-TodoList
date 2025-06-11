@@ -447,12 +447,6 @@ def reset_password(token):
 
 
 
-
-
-
-
-
-
 # DB testing
 
 from flask import Blueprint, jsonify, request
