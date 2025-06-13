@@ -7,3 +7,6 @@ app.register_blueprint(debug_bp)
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port, debug=False)
+
+
+# added sample comment for checking database persistance after git push
