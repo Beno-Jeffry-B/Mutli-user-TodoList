@@ -1,3 +1,4 @@
-todo/__pycache__/
+instance/
+__pycache__/
 venv/
-.env
+todo/.env/
