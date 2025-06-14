@@ -1,5 +1,7 @@
 # 📝 Taskify – Your Personal Task Manager
 
+🌐 **Live Demo**: [Click here to try Taskify](https://taskify-cs70.onrender.com/)
+
 ## 📌 Introduction
 
 **Taskify** is a simple, web-based Todo List manager built using Flask. It’s designed for anyone who wants a clutter-free way to stay organized whether you're a student, working professional, or just someone trying to plan their day better.
@@ -51,4 +53,91 @@ Taskify is built with a focus on simplicity, performance, and rapid development.
 | Email      | Flask-Mail (Gmail SMTP)      |
 | Env Mgmt   | python-dotenv                |
 | Others     | Flask-WTF (forms), SQLAlchemy (ORM) |
+
+
+
+
+
+## 🚀 Installation & Setup
+
+Follow these steps to run **Taskify** on your local machine:
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/Beno-Jeffry-B/Mutli-user-TodoList.git
+cd Mutli-user-TodoList
+```
+
+### Create & Activate a Virtual Environment
+# Windows
+```
+python -m venv venv
+venv\Scripts\activate
+```
+# MacOS/Linux
+```
+python3 -m venv venv
+source venv/bin/activate
+```
+
+### Install Dependencies
+```
+pip install -r requirements.txt
+```
+
+### Environment Setup
+1.Create a .env file in the root directory.
+
+2.Add your config variables like:
+
+```
+APP_SECRET_KEY=your_secret_key
+DATABASE_URL = your_db_url
+MAIL_USERNAME=your_email@gmail.com
+MAIL_PASSWORD=your_email_password
+```
+
+### Run the App Locally
+```
+python run.py
+```
+Open your browser and go to:
+http://localhost:5000
+
+## 🤝 Contributing
+
+Contributions are welcome! 🎉  
+If you find a bug, have a suggestion, or want to improve this project, feel free to:
+
+- Fork the repository
+- Create a new branch (`git checkout -b feature-name`)
+- Commit your changes (`git commit -m 'Add some feature'`)
+- Push to the branch (`git push origin feature-name`)
+- Open a Pull Request
+
+Let’s build something better together 🚀
+
+## 🔮 Upcoming updates
+
+Taskify is just getting started. Here’s what’s coming next:
+
+- 📧 **Smart Email Notifications**  
+  Get automatic email reminders before task deadlines so you never miss what’s important.
+
+- 👥 **Collaborative Workspaces**  
+  Multiple users can log in and manage tasks under a **shared team ID** perfect for group projects.  
+  Real-time updates across the team will be enabled using **socket programming**, keeping everyone in sync.
+
+So stay tuned more powerful updates are on the way! 🚀
+
+---
+
+
+
+
+
+
+
+
 
